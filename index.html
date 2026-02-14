@@ -100,14 +100,19 @@ btn.addEventListener("click", () => {
     // Flash göster
     flash.style.display = "flex";
 
-    // Flash sesi hemen çal
-    sound.currentTime = 0;
-    sound.play().catch(e => console.log(e));
-
-    // 500ms sonra korku resmi
+    // 0.5 saniye bekle
     setTimeout(() => {
+
+        // Flash kapat
         flash.style.display = "none";
+
+        // Korku resmi göster
         jumpscare.style.display = "flex";
+
+        // Ses başlat (tam bu anda)
+        sound.currentTime = 0;
+        sound.play().catch(e => console.log(e));
+
     }, 500);
 });
 </script>

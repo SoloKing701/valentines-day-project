@@ -44,22 +44,35 @@ button:hover {
     transform: scale(1.1);
 }
 
-/* Jumpscare ekranı */
+/* Flash efekti */
+#flash {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:white;
+    opacity:0;
+    pointer-events:none;
+    z-index:9998;
+}
+
+/* Jumpscare */
 #jumpscare {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    z-index: 9999;
-    background: black;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:none;
+    background:black;
+    z-index:9999;
 }
 
 #jumpscare img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 </style>
 </head>
@@ -68,42 +81,42 @@ button:hover {
 <div class="container">
     <h1>Sevgililer Günümüz Kutlu Olsun ❤️</h1>
     <p>Sen benim için çok özelsin.</p>
-    <button onclick="triggerJumpscare()">Tıkla 💘</button>
+    <button onclick="startSequence()">Tıkla 💘</button>
 </div>
+
+<div id="flash"></div>
 
 <div id="jumpscare">
-    <img src="hq720.jpg">
+    <!-- BURAYA KENDİ GÖRSELİNİ KOY -->
+    <img src="iş.jpg">
 </div>
 
-<audio id="scream" src="ses.mp3" preload="auto"></audio>
+<!-- BURAYA KENDİ SES DOSYAN -->
+<audio id="scream" src="flashbang.mp3" preload="auto"></audio>
 
 <script>
-function triggerJumpscare() {
+function startSequence() {
 
-    const jumpscare = document.getElementById("jumpscare");
-    const audio = document.getElementById("scream");
+    // 1️⃣ Flash bombası
+    const flash = document.getElementById("flash");
+    flash.style.transition = "opacity 0.1s";
+    flash.style.opacity = "1";
 
-    // Fullscreen aç
-    if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-    }
+    setTimeout(() => {
+        flash.style.opacity = "0";
+    }, 150);
 
-    // Jumpscare göster
-    jumpscare.style.display = "block";
+    // 2️⃣ 300ms sonra jumpscare görseli
+    setTimeout(() => {
+        document.getElementById("jumpscare").style.display = "block";
+    }, 300);
 
-    // Sesi baştan başlat ve çal
-    audio.currentTime = 0;
-    audio.volume = 1.0;
-    audio.play().catch(err => {
-        console.log("Ses engellendi:", err);
-    });
-
-    // Çıkmayı zorlaştırmak için ESC sonrası tekrar fullscreen
-    document.addEventListener("fullscreenchange", () => {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
-        }
-    });
+    // 3️⃣ 500ms sonra ses
+    setTimeout(() => {
+        const audio = document.getElementById("scream");
+        audio.currentTime = 0;
+        audio.play();
+    }, 500);
 }
 </script>
 

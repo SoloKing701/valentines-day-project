@@ -95,6 +95,7 @@ button {
 const btn = document.getElementById("triggerBtn");
 const flash = document.getElementById("flash");
 const jumpscare = document.getElementById("jumpscare");
+const baseSound = document.getElementById("sound");
 
 btn.addEventListener("click", () => {
 
@@ -105,10 +106,10 @@ btn.addEventListener("click", () => {
         flash.style.display = "none";
         jumpscare.style.display = "flex";
 
-        // Her tıklamada sesi klonluyoruz
-        const audio = new Audio("flash.mp3");
-        audio.volume = 1;
-        audio.play().catch(err => console.log(err));
+        // Sesi klonla (en stabil yöntem)
+        const soundClone = baseSound.cloneNode(true);
+        soundClone.currentTime = 0;
+        soundClone.play().catch(err => console.log("Ses hatası:", err));
 
     }, 500);
 
@@ -117,4 +118,5 @@ btn.addEventListener("click", () => {
 
 </body>
 </html>
+
 

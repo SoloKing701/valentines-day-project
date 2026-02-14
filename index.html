@@ -89,7 +89,9 @@ button {
     <img src="yks.png">
 </div>
 
-<audio id="scream" src="flash.mp3"></audio>
+<audio id="scream" preload="auto">
+    <source src="flash.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 const btn = document.getElementById("triggerBtn");
@@ -122,6 +124,7 @@ btn.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 

@@ -6,72 +6,72 @@
 <title>Sevgililer Günümüz Kutlu Olsun ❤️</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-    height: 100vh;
-    background: linear-gradient(135deg, #ff4e8a, #ff9ecf);
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    color: white;
-    text-align: center;
+body{
+    height:100vh;
+    background:linear-gradient(135deg,#ff4e8a,#ff9ecf);
+    font-family:Arial, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    text-align:center;
+    color:white;
 }
 
-.container {
-    background: rgba(0,0,0,0.3);
-    padding: 40px;
-    border-radius: 20px;
-    max-width: 400px;
+.container{
+    background:rgba(0,0,0,0.3);
+    padding:40px;
+    border-radius:20px;
+    max-width:400px;
 }
 
-button {
-    margin-top: 20px;
-    padding: 12px 25px;
-    font-size: 16px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    background: white;
-    color: #ff4e8a;
-    font-weight: bold;
+button{
+    margin-top:20px;
+    padding:12px 25px;
+    font-size:16px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    background:white;
+    color:#ff4e8a;
+    font-weight:bold;
 }
 
 /* FLASH */
-#flash {
-    position: fixed;
-    inset: 0;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+#flash{
+    position:fixed;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
 }
 
-#flash img {
-    width: 320px;
+#flash img{
+    width:320px;
 }
 
 /* JUMPSCARE */
-#jumpscare {
-    position: fixed;
-    inset: 0;
-    background: black;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
+#jumpscare{
+    position:fixed;
+    inset:0;
+    background:black;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:2000;
 }
 
-#jumpscare img {
-    max-width: 95%;
-    max-height: 95%;
-    object-fit: contain;
+#jumpscare img{
+    max-width:95%;
+    max-height:95%;
+    object-fit:contain;
 }
 </style>
 </head>
@@ -91,18 +91,17 @@ button {
     <img src="yks.png" alt="korku">
 </div>
 
+<audio id="baseSound" src="flash.mp3" preload="auto"></audio>
+
 <script>
 const btn = document.getElementById("triggerBtn");
 const flash = document.getElementById("flash");
 const jumpscare = document.getElementById("jumpscare");
-
-let triggered = false;
+const baseSound = document.getElementById("baseSound");
 
 btn.addEventListener("click", () => {
 
-    if (triggered) return; // tekrar tıklamayı engeller
-    triggered = true;
-
+    // Flash göster
     flash.style.display = "flex";
 
     setTimeout(() => {
@@ -110,10 +109,10 @@ btn.addEventListener("click", () => {
         flash.style.display = "none";
         jumpscare.style.display = "flex";
 
-        // En garantili ses yöntemi
-        const audio = new Audio("flash.MP3");
-        audio.volume = 1;
-        audio.play().catch(err => console.log("Ses hatası:", err));
+        // Sesi klonla (en stabil yöntem)
+        const soundClone = baseSound.cloneNode(true);
+        soundClone.currentTime = 0;
+        soundClone.play().catch(err => console.log(err));
 
     }, 500);
 

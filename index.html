@@ -6,18 +6,22 @@
 <title>Sevgililer Günümüz Kutlu Olsun ❤️</title>
 
 <style>
-body {
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
     background: linear-gradient(135deg, #ff4e8a, #ff9ecf);
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     overflow: hidden;
-    text-align: center;
     color: white;
+    text-align: center;
 }
 
 .container {
@@ -28,6 +32,7 @@ body {
 }
 
 button {
+    margin-top: 20px;
     padding: 12px 25px;
     font-size: 16px;
     border: none;
@@ -43,14 +48,13 @@ button {
     position: fixed;
     inset: 0;
     display: none;
-    z-index: 9998;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 #flash img {
-    width: 350px;
-    height: auto;
+    width: 320px;
 }
 
 /* JUMPSCARE */
@@ -59,9 +63,9 @@ button {
     inset: 0;
     background: black;
     display: none;
-    z-index: 9999;
     justify-content: center;
     align-items: center;
+    z-index: 2000;
 }
 
 #jumpscare img {
@@ -87,24 +91,18 @@ button {
     <img src="yks.png" alt="korku">
 </div>
 
-<audio id="sound" src="flash.MP3" preload="auto"></audio>
-
 <script>
 const btn = document.getElementById("triggerBtn");
 const flash = document.getElementById("flash");
 const jumpscare = document.getElementById("jumpscare");
-const sound = document.getElementById("sound");
+
+let triggered = false;
 
 btn.addEventListener("click", () => {
 
-    // Sesi click içinde başlatıp hemen durduruyoruz (tarayıcı izni alır)
-    sound.currentTime = 0;
-    sound.play().then(() => {
-        sound.pause();
-        sound.currentTime = 0;
-    }).catch(e => console.log(e));
+    if (triggered) return; // tekrar tıklamayı engeller
+    triggered = true;
 
-    // Flash göster
     flash.style.display = "flex";
 
     setTimeout(() => {
@@ -112,14 +110,15 @@ btn.addEventListener("click", () => {
         flash.style.display = "none";
         jumpscare.style.display = "flex";
 
-        // 0.5 saniye sonra gerçek ses
-        sound.currentTime = 0;
-        sound.play();
+        // En garantili ses yöntemi
+        const audio = new Audio("flash.mp3");
+        audio.volume = 1;
+        audio.play().catch(err => console.log("Ses hatası:", err));
 
     }, 500);
+
 });
 </script>
 
 </body>
 </html>
-

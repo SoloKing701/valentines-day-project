@@ -85,7 +85,7 @@ button:hover {
 <div class="container">
     <h1>Sevgililer Günümüz Kutlu Olsun ❤️</h1>
     <p>Hayatımın en güzel parçası olduğun için teşekkür ederim.</p>
-    <button onclick="showMessage()">Tıkla 💘</button>
+    <button onclick="triggerJumpscare()">Tıkla 💘</button>
     <div class="hidden-message" id="message">
         Seni her gün daha çok seviyorum 💞
     </div>
@@ -98,10 +98,8 @@ button:hover {
 <audio id="scream" src="https://www.myinstants.com/media/sounds/movie_1.mp3" preload="auto"></audio>
 
 <script>
-function showMessage() {
-    document.getElementById("message").style.display = "block";
-}
 
+// Kalp efekti
 function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
@@ -117,16 +115,7 @@ function createHeart() {
 
 setInterval(createHeart, 300);
 
-// 👻 İlk kullanıcı etkileşiminden sonra gizli sayaç başlasın
-let started = false;
-
-document.body.addEventListener("click", function() {
-    if (!started) {
-        started = true;
-        setTimeout(triggerJumpscare, 7000);
-    }
-});
-
+// Jumpscare
 function triggerJumpscare() {
     document.getElementById("jumpscare").style.display = "block";
     document.getElementById("scream").play();

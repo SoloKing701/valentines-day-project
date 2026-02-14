@@ -49,7 +49,7 @@ button {
 }
 
 #flash img {
-    width: 400px; /* flash boyutu */
+    width: 350px;
     height: auto;
 }
 
@@ -65,9 +65,9 @@ button {
 }
 
 #jumpscare img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain; /* oran bozulmaz */
+    max-width: 95%;
+    max-height: 95%;
+    object-fit: contain;
 }
 </style>
 </head>
@@ -79,52 +79,38 @@ button {
     <button id="triggerBtn">Tıkla 💘</button>
 </div>
 
-<!-- Flash -->
 <div id="flash">
-    <img src="flashbomb.png">
+    <img src="flashbomb.png" alt="flash">
 </div>
 
-<!-- Jumpscare -->
 <div id="jumpscare">
-    <img src="yks.png">
+    <img src="yks.png" alt="korku">
 </div>
 
-<audio id="scream" preload="auto">
-    <source src="flash.mp3" type="audio/mpeg">
-</audio>
+<audio id="sound" src="flash.mp3" preload="auto"></audio>
 
 <script>
 const btn = document.getElementById("triggerBtn");
 const flash = document.getElementById("flash");
-const jump = document.getElementById("jumpscare");
-const audio = document.getElementById("scream");
+const jumpscare = document.getElementById("jumpscare");
+const sound = document.getElementById("sound");
 
-btn.addEventListener("click", function () {
+btn.addEventListener("click", () => {
 
     // Flash göster
     flash.style.display = "flex";
 
-    // 0.5 saniye sonra
+    // Flash sesi hemen çal
+    sound.currentTime = 0;
+    sound.play().catch(e => console.log(e));
+
+    // 500ms sonra korku resmi
     setTimeout(() => {
-
         flash.style.display = "none";
-        jump.style.display = "flex";
-
-        // Ses baştan başlat
-        audio.currentTime = 0;
-
-        // Ses çal (kullanıcı tıklaması olduğu için engellenmez)
-        audio.play().catch(err => {
-            console.log("Ses çalamadı:", err);
-        });
-
+        jumpscare.style.display = "flex";
     }, 500);
 });
 </script>
 
 </body>
 </html>
-
-
-
-

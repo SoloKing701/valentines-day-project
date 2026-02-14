@@ -24,7 +24,6 @@ body {
     background: rgba(0,0,0,0.3);
     padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.4);
     max-width: 400px;
 }
 
@@ -37,46 +36,38 @@ button {
     background: white;
     color: #ff4e8a;
     font-weight: bold;
-    transition: 0.3s;
 }
 
-button:hover {
-    transform: scale(1.1);
-}
-
-/* Flash görseli */
+/* Flash ekranı */
 #flashImage {
     position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    display:none;
-    z-index:9998;
+    inset: 0;
+    display: none;
+    z-index: 9998;
 }
 
 #flashImage img {
-    width:100%;
-    height:70%;
-    object-fit:cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-/* Jumpscare */
+/* Jumpscare ekranı */
 #jumpscare {
     position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:black;  /* Kenarlar siyah */
-    display:none;
-    z-index:9999;
+    inset: 0;
+    background: black;
+    display: none;
+    z-index: 9999;
+
+    justify-content: center;
+    align-items: center;
 }
 
 #jumpscare img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;  /* ÖNEMLİ */
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain; /* Dikey düzgün oturur */
 }
 </style>
 </head>
@@ -88,31 +79,36 @@ button:hover {
     <button onclick="startSequence()">Tıkla 💘</button>
 </div>
 
-<!-- FLASH GÖRSELİN -->
+<!-- Flash Görsel -->
 <div id="flashImage">
     <img src="flashbomb.png">
 </div>
 
-<!-- KORKU GÖRSELİN -->
+<!-- Jumpscare Görsel -->
 <div id="jumpscare">
     <img src="yks.png">
 </div>
 
-<!-- SES -->
-<audio id="scream" src="flashbang.MP3" preload="auto"></audio>
+<audio id="scream" src="ses.mp3" preload="auto"></audio>
 
 <script>
 function startSequence() {
 
+    const flash = document.getElementById("flashImage");
+    const jump = document.getElementById("jumpscare");
+    const audio = document.getElementById("scream");
+
     // 1️⃣ Flash göster
-    document.getElementById("flashImage").style.display = "block";
+    flash.style.display = "block";
 
-    // 2️⃣ 0.5 saniye sonra flash kapat, jumpscare + ses birlikte başlat
+    // 2️⃣ 0.5 saniye sonra flash kapat
     setTimeout(() => {
-        document.getElementById("flashImage").style.display = "none";
-        document.getElementById("jumpscare").style.display = "block";
+        flash.style.display = "none";
 
-        const audio = document.getElementById("scream");
+        // Jumpscare aç
+        jump.style.display = "flex";
+
+        // Ses çal
         audio.currentTime = 0;
         audio.play();
 
@@ -122,7 +118,3 @@ function startSequence() {
 
 </body>
 </html>
-
-
-
-

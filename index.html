@@ -4,123 +4,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sevgililer Günümüz Kutlu Olsun ❤️</title>
-
 <style>
-body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #ff4e8a, #ff9ecf);
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    text-align: center;
-    color: white;
-}
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #ff4e8a, #ff9ecf);
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        text-align: center;
+        color: white;
+    }
 
-.container {
-    background: rgba(0,0,0,0.3);
-    padding: 40px;
-    border-radius: 20px;
-    max-width: 400px;
-}
+    .container {
+        background: rgba(0,0,0,0.3);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.4);
+        max-width: 400px;
+    }
 
-button {
-    padding: 12px 25px;
-    font-size: 16px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    background: white;
-    color: #ff4e8a;
-    font-weight: bold;
-}
+    h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
 
-/* FLASH */
-#flash {
-    position: fixed;
-    inset: 0;
-    display: none;
-    z-index: 9998;
-    justify-content: center;
-    align-items: center;
-}
+    p {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
 
-#flash img {
-    width: 350px;
-    height: auto;
-}
+    button {
+        padding: 12px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        background: white;
+        color: #ff4e8a;
+        font-weight: bold;
+        transition: 0.3s;
+    }
 
-/* JUMPSCARE */
-#jumpscare {
-    position: fixed;
-    inset: 0;
-    background: black;
-    display: none;
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-}
+    button:hover {
+        transform: scale(1.1);
+    }
 
-#jumpscare img {
-    max-width: 95%;
-    max-height: 95%;
-    object-fit: contain;
-}
+    .hidden-message {
+        margin-top: 20px;
+        font-size: 18px;
+        display: none;
+    }
+
+    .heart {
+        position: absolute;
+        color: white;
+        font-size: 20px;
+        animation: float 5s linear infinite;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(100vh); opacity: 1; }
+        100% { transform: translateY(-10vh); opacity: 0; }
+    }
 </style>
 </head>
 <body>
 
 <div class="container">
     <h1>Sevgililer Günümüz Kutlu Olsun ❤️</h1>
-    <p>Sen benim için çok özelsin.</p>
-    <button id="triggerBtn">Tıkla 💘</button>
+    <p>Hayatımın en güzel parçası olduğun için teşekkür ederim.</p>
+    <button onclick="showMessage()">Tıkla 💘</button>
+    <div class="hidden-message" id="message">
+        Seni her gün daha çok seviyorum 💞
+    </div>
 </div>
-
-<div id="flash">
-    <img src="flashbomb.png" alt="flash">
-</div>
-
-<div id="jumpscare">
-    <img src="yks.png" alt="korku">
-</div>
-
-<audio id="sound" src="flash.MP3" preload="auto"></audio>
 
 <script>
-const btn = document.getElementById("triggerBtn");
-const flash = document.getElementById("flash");
-const jumpscare = document.getElementById("jumpscare");
-const sound = document.getElementById("sound");
+function showMessage() {
+    document.getElementById("message").style.display = "block";
+}
 
-btn.addEventListener("click", () => {
-
-    // Sesi click içinde başlatıp hemen durduruyoruz (tarayıcı izni alır)
-    sound.currentTime = 0;
-    sound.play().then(() => {
-        sound.pause();
-        sound.currentTime = 0;
-    }).catch(e => console.log(e));
-
-    // Flash göster
-    flash.style.display = "flex";
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 10 + "px";
+    document.body.appendChild(heart);
 
     setTimeout(() => {
+        heart.remove();
+    }, 5000);
+}
 
-        flash.style.display = "none";
-        jumpscare.style.display = "flex";
-
-        // 0.5 saniye sonra gerçek ses
-        sound.currentTime = 0;
-        sound.play();
-
-    }, 500);
-});
+setInterval(createHeart, 300);
 </script>
 
 </body>
 </html>
-
-

@@ -38,38 +38,36 @@ button {
     font-weight: bold;
 }
 
-/* Flash ekranı */
-#flashImage {
+/* FLASH */
+#flash {
     position: fixed;
     inset: 0;
     display: none;
     z-index: 9998;
-
     justify-content: center;
     align-items: center;
 }
 
-#flashImage img {
-    width: 300px;      /* Boyutu buradan ayarlayabilirsin */
+#flash img {
+    width: 250px; /* flash boyutu */
     height: auto;
 }
 
-/* Jumpscare ekranı */
+/* JUMPSCARE */
 #jumpscare {
     position: fixed;
     inset: 0;
     background: black;
     display: none;
     z-index: 9999;
-
     justify-content: center;
     align-items: center;
 }
 
 #jumpscare img {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain; /* Dikey düzgün oturur */
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain; /* oran bozulmaz */
 }
 </style>
 </head>
@@ -78,47 +76,49 @@ button {
 <div class="container">
     <h1>Sevgililer Günümüz Kutlu Olsun ❤️</h1>
     <p>Sen benim için çok özelsin.</p>
-    <button onclick="startSequence()">Tıkla 💘</button>
+    <button id="triggerBtn">Tıkla 💘</button>
 </div>
 
-<!-- Flash Görsel -->
-<div id="flashImage">
+<!-- Flash -->
+<div id="flash">
     <img src="flashbomb.png">
 </div>
 
-<!-- Jumpscare Görsel -->
+<!-- Jumpscare -->
 <div id="jumpscare">
     <img src="yks.png">
 </div>
 
-<audio id="scream" src="ses.mp3" preload="auto"></audio>
+<audio id="scream" src="ses.mp3"></audio>
 
 <script>
-function startSequence() {
+const btn = document.getElementById("triggerBtn");
+const flash = document.getElementById("flash");
+const jump = document.getElementById("jumpscare");
+const audio = document.getElementById("scream");
 
-    const flash = document.getElementById("flashImage");
-    const jump = document.getElementById("jumpscare");
-    const audio = document.getElementById("scream");
+btn.addEventListener("click", function () {
 
-    // 1️⃣ Flash göster
-    flash.style.display = "block";
+    // Flash göster
+    flash.style.display = "flex";
 
-    // 2️⃣ 0.5 saniye sonra flash kapat
+    // 0.5 saniye sonra
     setTimeout(() => {
-        flash.style.display = "none";
 
-        // Jumpscare aç
+        flash.style.display = "none";
         jump.style.display = "flex";
 
-        // Ses çal
+        // Ses baştan başlat
         audio.currentTime = 0;
-        audio.play();
+
+        // Ses çal (kullanıcı tıklaması olduğu için engellenmez)
+        audio.play().catch(err => {
+            console.log("Ses çalamadı:", err);
+        });
 
     }, 500);
-}
+});
 </script>
 
 </body>
 </html>
-
-

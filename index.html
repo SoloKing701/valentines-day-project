@@ -97,21 +97,24 @@ const sound = document.getElementById("sound");
 
 btn.addEventListener("click", () => {
 
+    // Sesi click içinde başlatıp hemen durduruyoruz (tarayıcı izni alır)
+    sound.currentTime = 0;
+    sound.play().then(() => {
+        sound.pause();
+        sound.currentTime = 0;
+    }).catch(e => console.log(e));
+
     // Flash göster
     flash.style.display = "flex";
 
-    // 0.5 saniye bekle
     setTimeout(() => {
 
-        // Flash kapat
         flash.style.display = "none";
-
-        // Korku resmi göster
         jumpscare.style.display = "flex";
 
-        // Ses başlat (tam bu anda)
+        // 0.5 saniye sonra gerçek ses
         sound.currentTime = 0;
-        sound.play().catch(e => console.log(e));
+        sound.play();
 
     }, 500);
 });
@@ -119,4 +122,5 @@ btn.addEventListener("click", () => {
 
 </body>
 </html>
+
 

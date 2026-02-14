@@ -44,25 +44,7 @@ button:hover {
     transform: scale(1.1);
 }
 
-.hidden-message {
-    margin-top: 20px;
-    font-size: 18px;
-    display: none;
-}
-
-.heart {
-    position: absolute;
-    color: white;
-    font-size: 20px;
-    animation: float 5s linear infinite;
-}
-
-@keyframes float {
-    0% { transform: translateY(100vh); opacity: 1; }
-    100% { transform: translateY(-10vh); opacity: 0; }
-}
-
-/* Jumpscare */
+/* Jumpscare ekranı */
 #jumpscare {
     position: fixed;
     top: 0;
@@ -71,6 +53,7 @@ button:hover {
     height: 100%;
     display: none;
     z-index: 9999;
+    background: black;
 }
 
 #jumpscare img {
@@ -84,45 +67,45 @@ button:hover {
 
 <div class="container">
     <h1>Sevgililer Günümüz Kutlu Olsun ❤️</h1>
-    <p>Hayatımın en güzel parçası olduğun için teşekkür ederim.</p>
+    <p>Sen benim için çok özelsin.</p>
     <button onclick="triggerJumpscare()">Tıkla 💘</button>
-    <div class="hidden-message" id="message">
-        Seni her gün daha çok seviyorum 💞
-    </div>
 </div>
 
 <div id="jumpscare">
     <img src="hq720.jpg">
 </div>
 
-<audio id="scream" src="ses.MP3" preload="auto"></audio>
+<audio id="scream" src="ses.mp3" preload="auto"></audio>
 
 <script>
-
-// Kalp efekti
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 10 + "px";
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 5000);
-}
-
-setInterval(createHeart, 300);
-
-// Jumpscare
 function triggerJumpscare() {
-    document.getElementById("jumpscare").style.display = "block";
-    document.getElementById("scream").play();
+
+    const jumpscare = document.getElementById("jumpscare");
+    const audio = document.getElementById("scream");
+
+    // Fullscreen aç
+    if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+    }
+
+    // Jumpscare göster
+    jumpscare.style.display = "block";
+
+    // Sesi baştan başlat ve çal
+    audio.currentTime = 0;
+    audio.volume = 1.0;
+    audio.play().catch(err => {
+        console.log("Ses engellendi:", err);
+    });
+
+    // Çıkmayı zorlaştırmak için ESC sonrası tekrar fullscreen
+    document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        }
+    });
 }
 </script>
 
 </body>
 </html>
-
-

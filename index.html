@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tıkla Bakalım 😈</title>
+<title>Tıkla Bakalımm 😈</title>
 
 <style>
 body {
@@ -62,26 +62,36 @@ button {
 
 <div id="jumpscare">
     <img src="https://i.imgur.com/8Km9tLL.jpg">
-    <audio id="scream" src="https://www.myinstants.com/media/sounds/movie_1.mp3"></audio>
 </div>
+
+<audio id="scream" src="https://www.myinstants.com/media/sounds/movie_1.mp3"></audio>
 
 <script>
 const btn = document.getElementById("runawayBtn");
 const jumpscare = document.getElementById("jumpscare");
 const scream = document.getElementById("scream");
 
+let started = false;
+
 btn.addEventListener("mouseover", function() {
+
+    // Buton kaçma
     const x = Math.random() * (window.innerWidth - 150);
     const y = Math.random() * (window.innerHeight - 80);
     btn.style.left = x + "px";
     btn.style.top = y + "px";
+
+    // İlk etkileşimden sonra jumpscare başlat
+    if (!started) {
+        started = true;
+        setTimeout(triggerJumpscare, 5000);
+    }
 });
 
-// 8 saniye sonra jumpscare
-setTimeout(function() {
+function triggerJumpscare() {
     jumpscare.style.display = "flex";
     scream.play();
-}, 8000);
+}
 </script>
 
 </body>

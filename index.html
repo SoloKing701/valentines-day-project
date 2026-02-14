@@ -101,25 +101,37 @@ const baseSound = document.getElementById("baseSound");
 
 btn.addEventListener("click", () => {
 
-    // Flash göster
-    flash.style.display = "flex";
+    // Butonu gizle
+    btn.style.display = "none";
 
+    // Romantik yazıyı değiştir
+    document.querySelector(".container p").innerText =
+        "Seni çok seviyorum... ❤️";
+
+    // 5 saniye bekle
     setTimeout(() => {
 
-        flash.style.display = "none";
-        jumpscare.style.display = "flex";
+        // Flash göster
+        flash.style.display = "flex";
 
-        // Sesi klonla (en stabil yöntem)
-        const soundClone = baseSound.cloneNode(true);
-        soundClone.currentTime = 0;
-        soundClone.play().catch(err => console.log(err));
+        setTimeout(() => {
 
-    }, 500);
+            flash.style.display = "none";
+            jumpscare.style.display = "flex";
+
+            const soundClone = baseSound.cloneNode(true);
+            soundClone.currentTime = 0;
+            soundClone.play().catch(err => console.log(err));
+
+        }, 500); // flash 0.5 saniye
+
+    }, 5000); // 5 saniye bekleme
 
 });
 </script>
 
 </body>
 </html>
+
 
 

@@ -9,22 +9,18 @@
 body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(135deg, #ff4e8a, #ff9ecf);
+    background: black;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
     overflow: hidden;
-    text-align: center;
     color: white;
 }
 
-.container {
-    position: relative;
-}
-
 h1 {
-    margin-bottom: 40px;
+    position: absolute;
+    top: 20%;
 }
 
 button {
@@ -35,21 +31,44 @@ button {
     border-radius: 30px;
     cursor: pointer;
     background: white;
-    color: #ff4e8a;
+    color: red;
     font-weight: bold;
-    transition: 0.2s;
+}
+
+#jumpscare {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#jumpscare img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Bana tıkla bakalım 😏</h1>
-    <button id="runawayBtn">TIKLA 💘</button>
+<h1>Bana tıkla bakalım 😏</h1>
+<button id="runawayBtn">TIKLA 💘</button>
+
+<div id="jumpscare">
+    <img src="https://i.imgur.com/8Km9tLL.jpg">
+    <audio id="scream" src="https://www.myinstants.com/media/sounds/movie_1.mp3"></audio>
 </div>
 
 <script>
 const btn = document.getElementById("runawayBtn");
+const jumpscare = document.getElementById("jumpscare");
+const scream = document.getElementById("scream");
 
 btn.addEventListener("mouseover", function() {
     const x = Math.random() * (window.innerWidth - 150);
@@ -57,6 +76,12 @@ btn.addEventListener("mouseover", function() {
     btn.style.left = x + "px";
     btn.style.top = y + "px";
 });
+
+// 8 saniye sonra jumpscare
+setTimeout(function() {
+    jumpscare.style.display = "flex";
+    scream.play();
+}, 8000);
 </script>
 
 </body>
